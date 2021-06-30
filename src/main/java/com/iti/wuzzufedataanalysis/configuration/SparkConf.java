@@ -10,7 +10,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @Configuration
 @PropertySource("classpath:application.properties")
 public class SparkConf {
-
+    // Ahmed
     @Value("${app.name:Wuzzuf-Data-Analysis}")
     private String appName;
 
@@ -29,4 +29,6 @@ public class SparkConf {
     public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
     }
+    // Mahmoud
+    // Ibrahim
 }

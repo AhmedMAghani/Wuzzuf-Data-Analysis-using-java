@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class WuzzufJob {
+    // Ahmed
     private String jobTitle;
     private String companyName;
     private String jobLocation;
@@ -85,4 +86,6 @@ public class WuzzufJob {
     public void setSkills(String[] skills) {
         Skills = new ArrayList(Arrays.asList(skills));
     }
+    // Mahmoud
+    // Ibrahim
 }

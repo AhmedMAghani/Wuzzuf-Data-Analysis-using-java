@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestMapping("wuzzufDataAnalysis/api")
 public class DataAnalysisController {
+    // Ahmed
     private final DataAnalysisService dataAnalysisService;
 
     @Autowired
@@ -29,4 +30,6 @@ public class DataAnalysisController {
     public ResponseEntity<StructType> getDatasetSchema(){
         return new ResponseEntity<StructType>(dataAnalysisService.getDatasetSchema(), HttpStatus.OK);
     }
+    // Mahmoud
+    // Ibrahim
 }
