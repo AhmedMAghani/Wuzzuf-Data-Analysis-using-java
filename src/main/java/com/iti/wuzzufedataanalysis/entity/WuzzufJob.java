@@ -1,19 +1,20 @@
 package com.iti.wuzzufedataanalysis.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-public class WuzzufJob {
-    // Ahmed
+public class WuzzufJob implements Serializable {
     private String jobTitle;
     private String companyName;
     private String jobLocation;
     private String jobType;
     private String jobLevel;
-    private Double jobMiniYearExp;
-    private Double jobMaxYearExp;
+    private String jopExpYearSt;
+//    private Double jobMiniYearExp;
+//    private Double jobMaxYearExp;
     private String jobCountry;
-    private ArrayList<String> Skills;
+    private ArrayList<String> skills;
+//    private String skills;
 
     public String getJobTitle() {
         return jobTitle;
@@ -55,21 +56,33 @@ public class WuzzufJob {
         this.jobLevel = jobLevel;
     }
 
-    public Double getJobMiniYearExp() {
-        return jobMiniYearExp;
+    public String getJopExpYearSt() {
+        return jopExpYearSt;
     }
 
-    public void setJobMiniYearExp(Double jobMiniYearExp) {
-        this.jobMiniYearExp = jobMiniYearExp;
+    public void setJopExpYearSt(String jopExpYearSt) {
+        this.jopExpYearSt = jopExpYearSt;
     }
 
-    public Double getJobMaxYearExp() {
-        return jobMaxYearExp;
-    }
+//    public void setSkills(ArrayList<String> skills) {
+//        Skills = skills;
+//    }
 
-    public void setJobMaxYearExp(Double jobMaxYearExp) {
-        this.jobMaxYearExp = jobMaxYearExp;
-    }
+//    public Double getJobMiniYearExp() {
+//        return jobMiniYearExp;
+//    }
+
+//    public void setJobMiniYearExp(Double jobMiniYearExp) {
+//        this.jobMiniYearExp = jobMiniYearExp;
+//    }
+
+//    public Double getJobMaxYearExp() {
+//        return jobMaxYearExp;
+//    }
+
+//    public void setJobMaxYearExp(Double jobMaxYearExp) {
+//        this.jobMaxYearExp = jobMaxYearExp;
+//    }
 
     public String getJobCountry() {
         return jobCountry;
@@ -79,13 +92,19 @@ public class WuzzufJob {
         this.jobCountry = jobCountry;
     }
 
+//    public String getSkills() {
+//        return skills;
+//    }
+
+//    public void setSkills(String skills) {
+//        this.skills = skills;
+//    }
+
     public ArrayList<String> getSkills() {
-        return Skills;
+        return skills;
     }
 
-    public void setSkills(String[] skills) {
-        Skills = new ArrayList(Arrays.asList(skills));
+    public void setSkills(ArrayList<String> skills) {
+        this.skills = skills;
     }
-    // Mahmoud
-    // Ibrahim
 }
