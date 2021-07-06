@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Repository
@@ -28,7 +30,7 @@ public class DatasetRepoImpl implements DatasetRepo {
 
     private final SparkSession spark;
 
-    private final Dataset<WuzzufJob> wuzzufJobsDataset;
+    private Dataset<WuzzufJob> wuzzufJobsDataset;
 
     public Dataset<WuzzufJob> getWuzzufJobsDataset() {
         return wuzzufJobsDataset;
@@ -39,7 +41,9 @@ public class DatasetRepoImpl implements DatasetRepo {
         this.spark = spark;
         Dataset<Row> wuzzufRowDataset = readDataSet();
         wuzzufRowDataset = factorizeSkillsIntoArray(wuzzufRowDataset);
+        wuzzufRowDataset = factorizeExpYearsColumn(wuzzufRowDataset);
         wuzzufJobsDataset = convertDatasetToTypedDataset(wuzzufRowDataset);
+        deleteCol("jopExpYearSt");
     }
 
     public Dataset<WuzzufDataModel> groupDatasetByCompanyName(){
@@ -58,8 +62,12 @@ public class DatasetRepoImpl implements DatasetRepo {
         return wuzzufJobsDataset.collectAsList().stream().map(WuzzufJob::getSkills).collect(Collectors.toList());
     }
 
-    public void cleanTempCol(){
-        wuzzufJobsDataset.drop("countedCol").as(Encoders.bean(WuzzufJob.class));
+    public void deleteCol(String columnName){
+        wuzzufJobsDataset.drop(columnName).as(Encoders.bean(WuzzufJob.class));
+    }
+
+    public void saveDataset(Dataset<Row> newDataset){
+        wuzzufJobsDataset = newDataset.as(Encoders.bean(WuzzufJob.class));
     }
 
     private Dataset<Row> readDataSet(){
@@ -80,13 +88,17 @@ public class DatasetRepoImpl implements DatasetRepo {
         return wuzzufRowDataset.as(Encoders.bean(WuzzufJob.class));
     }
 
-//    TODO: complete the factorization method
-//    public void factorizeExpYears(){
-//        wuzzufJobsDataset = wuzzufJobsDataset.withColumn("jobMiniYearExp",functions.regexp_extract(wuzzufJobsDataset.col("jopExpYearSt"),"([0-9]+)|(null)",0));
-//        wuzzufJobsDataset.select("skills").map((String)value -> {
-//            Pattern r = Pattern.compile("\"[a-zA-Z]+,");
-//            Matcher m = r.matcher((String)value);
-//        })
-//        wuzzufJobsDataset.show();
-//    }
+    private Dataset<Row> factorizeExpYearsColumn(Dataset<Row> wuzzufRowDataset){
+        Dataset<Row> tempDataset;
+        String miniYearExpExtractionPattern = "(\\d+)|(null)";
+        String miniYearExpReplacementPattern = "((\\d+)?-)|(null)|((\\d+)?\\+)";
+        String maxYearExpExtractionPattern = "(\\d+)|(\\s{1,2})";
+        String nullValuePattern = "(null)|(\\s{1,2})";
+        tempDataset = wuzzufRowDataset.withColumn("jobMiniYearExp", functions.regexp_extract(functions.col("jopExpYearSt"),miniYearExpExtractionPattern,0));
+        tempDataset = tempDataset.withColumn("jopExpYearSt", functions.regexp_replace(functions.col("jopExpYearSt"), miniYearExpReplacementPattern, ""));
+        tempDataset = tempDataset.withColumn("jobMaxYearExp", functions.regexp_extract(functions.col("jopExpYearSt"), maxYearExpExtractionPattern, 0));
+        tempDataset = tempDataset.withColumn("jobMiniYearExp", functions.regexp_replace(functions.col("jobMiniYearExp"), nullValuePattern, String.valueOf(0)).cast("double"));
+        tempDataset = tempDataset.withColumn("jobMaxYearExp", functions.regexp_replace(functions.col("jobMaxYearExp"), nullValuePattern, String.valueOf(0)).cast("double"));
+        return tempDataset;
+    }
 }
