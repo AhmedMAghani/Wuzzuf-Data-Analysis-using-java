@@ -1,14 +1,13 @@
 package com.iti.wuzzufedataanalysis.controller;
 
 import com.iti.wuzzufedataanalysis.entity.WuzzufDataModel;
+import com.iti.wuzzufedataanalysis.entity.WuzzufJob;
 import com.iti.wuzzufedataanalysis.service.DataAnalysisService;
 import org.apache.spark.sql.types.StructType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -51,4 +50,14 @@ public class DataAnalysisController {
     public ResponseEntity<List<WuzzufDataModel>> getSkills(){
         return new ResponseEntity<>(dataAnalysisService.getSkills(), HttpStatus.OK);
     }
+
+    @GetMapping("/getJobs")
+    public ResponseEntity<List<WuzzufJob>> getJobs(){
+        return new ResponseEntity<>(dataAnalysisService.getJobs(), HttpStatus.OK);
+    }
+
+//    @PostMapping("/getKMeansResult")
+//    public void  getKMeansResult(@RequestBody String colName){
+//        dataAnalysisService.kMeans(colName);
+//    }
 }

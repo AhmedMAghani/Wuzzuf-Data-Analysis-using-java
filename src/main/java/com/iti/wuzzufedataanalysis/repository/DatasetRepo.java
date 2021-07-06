@@ -3,6 +3,7 @@ package com.iti.wuzzufedataanalysis.repository;
 import com.iti.wuzzufedataanalysis.entity.WuzzufDataModel;
 import com.iti.wuzzufedataanalysis.entity.WuzzufJob;
 import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.Row;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,4 +14,5 @@ public interface DatasetRepo {
     List<ArrayList<String>> filterSkills();
     Dataset<WuzzufDataModel> groupDatasetByJobLocation();
     Dataset<WuzzufDataModel> groupDatasetByJobTitle();
+    void saveDataset(Dataset<Row> newDataset);
 }

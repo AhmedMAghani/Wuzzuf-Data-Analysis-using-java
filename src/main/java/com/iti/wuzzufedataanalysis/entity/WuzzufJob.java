@@ -9,12 +9,10 @@ public class WuzzufJob implements Serializable {
     private String jobLocation;
     private String jobType;
     private String jobLevel;
-    private String jopExpYearSt;
-//    private Double jobMiniYearExp;
-//    private Double jobMaxYearExp;
     private String jobCountry;
     private ArrayList<String> skills;
-//    private String skills;
+    private double jobMiniYearExp;
+    private double jobMaxYearExp;
 
     public String getJobTitle() {
         return jobTitle;
@@ -56,34 +54,6 @@ public class WuzzufJob implements Serializable {
         this.jobLevel = jobLevel;
     }
 
-    public String getJopExpYearSt() {
-        return jopExpYearSt;
-    }
-
-    public void setJopExpYearSt(String jopExpYearSt) {
-        this.jopExpYearSt = jopExpYearSt;
-    }
-
-//    public void setSkills(ArrayList<String> skills) {
-//        Skills = skills;
-//    }
-
-//    public Double getJobMiniYearExp() {
-//        return jobMiniYearExp;
-//    }
-
-//    public void setJobMiniYearExp(Double jobMiniYearExp) {
-//        this.jobMiniYearExp = jobMiniYearExp;
-//    }
-
-//    public Double getJobMaxYearExp() {
-//        return jobMaxYearExp;
-//    }
-
-//    public void setJobMaxYearExp(Double jobMaxYearExp) {
-//        this.jobMaxYearExp = jobMaxYearExp;
-//    }
-
     public String getJobCountry() {
         return jobCountry;
     }
@@ -92,19 +62,27 @@ public class WuzzufJob implements Serializable {
         this.jobCountry = jobCountry;
     }
 
-//    public String getSkills() {
-//        return skills;
-//    }
-
-//    public void setSkills(String skills) {
-//        this.skills = skills;
-//    }
-
     public ArrayList<String> getSkills() {
         return skills;
     }
 
     public void setSkills(ArrayList<String> skills) {
         this.skills = skills;
+    }
+
+    public double getJobMiniYearExp() {
+        return jobMiniYearExp;
+    }
+
+    public void setJobMiniYearExp(double jobMiniYearExp) {
+        this.jobMiniYearExp = jobMiniYearExp;
+    }
+
+    public double getJobMaxYearExp() {
+        return jobMaxYearExp;
+    }
+
+    public void setJobMaxYearExp(double jobMaxYearExp) {
+        this.jobMaxYearExp = jobMaxYearExp;
     }
 }
