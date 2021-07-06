@@ -2,13 +2,13 @@ package com.iti.wuzzufedataanalysis.entity;
 
 import java.io.Serializable;
 
-public class GroupByCount implements Serializable {
+public class WuzzufDataModel implements Serializable {
     private String countedCol;
     private long count;
 
-    public GroupByCount(){}
+    public WuzzufDataModel(){}
 
-    public GroupByCount(String countedCol, long count) {
+    public WuzzufDataModel(String countedCol, long count) {
         this.countedCol = countedCol;
         this.count = count;
     }

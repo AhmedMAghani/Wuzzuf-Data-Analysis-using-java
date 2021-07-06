@@ -1,6 +1,6 @@
 package com.iti.wuzzufedataanalysis.repository;
 
-import com.iti.wuzzufedataanalysis.entity.GroupByCount;
+import com.iti.wuzzufedataanalysis.entity.WuzzufDataModel;
 import com.iti.wuzzufedataanalysis.entity.WuzzufJob;
 import org.apache.spark.sql.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,16 +42,16 @@ public class DatasetRepoImpl implements DatasetRepo {
         wuzzufJobsDataset = convertDatasetToTypedDataset(wuzzufRowDataset);
     }
 
-    public Dataset<GroupByCount> groupDatasetByCompanyName(){
-        return wuzzufJobsDataset.withColumn("countedCol",functions.column("jobTitle")).groupBy("countedCol").count().as(Encoders.bean(GroupByCount.class));
+    public Dataset<WuzzufDataModel> groupDatasetByCompanyName(){
+        return wuzzufJobsDataset.withColumn("countedCol",functions.column("companyName")).groupBy("countedCol").count().as(Encoders.bean(WuzzufDataModel.class));
     }
 
-    public Dataset<GroupByCount> groupDatasetByJobTitle(){
-        return wuzzufJobsDataset.withColumn("countedCol",functions.column("companyName")).groupBy("countedCol").count().as(Encoders.bean(GroupByCount.class));
+    public Dataset<WuzzufDataModel> groupDatasetByJobTitle(){
+        return wuzzufJobsDataset.withColumn("countedCol",functions.column("jobTitle")).groupBy("countedCol").count().as(Encoders.bean(WuzzufDataModel.class));
     }
 
-    public Dataset<GroupByCount> groupDatasetByJobLocation(){
-        return wuzzufJobsDataset.withColumn("countedCol",functions.column("jobLocation")).groupBy("countedCol").count().as(Encoders.bean(GroupByCount.class));
+    public Dataset<WuzzufDataModel> groupDatasetByJobLocation(){
+        return wuzzufJobsDataset.withColumn("countedCol",functions.column("jobLocation")).groupBy("countedCol").count().as(Encoders.bean(WuzzufDataModel.class));
     }
 
     public List<ArrayList<String>> filterSkills(){
@@ -63,7 +63,7 @@ public class DatasetRepoImpl implements DatasetRepo {
     }
 
     private Dataset<Row> readDataSet(){
-        String WUZZUF_DATASET_CSV = "C:\\Users\\light\\IdeaProjects\\WuzzufDataAnalysis\\src\\main\\resources\\Wuzzuf_Jobs.csv";
+        String WUZZUF_DATASET_CSV = "C:\\Users\\light\\IdeaProjects\\WuzzufDataAnalysis\\src\\main\\resources\\static\\Wuzzuf_Jobs.csv";
         String DATASET_EXTENSION = "csv";
         return spark.read().format(DATASET_EXTENSION)
                 .option(SEP,CSV_CONF.get(SEP))

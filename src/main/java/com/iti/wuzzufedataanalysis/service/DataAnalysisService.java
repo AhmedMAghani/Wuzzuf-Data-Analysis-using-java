@@ -1,15 +1,14 @@
 package com.iti.wuzzufedataanalysis.service;
 
-import com.iti.wuzzufedataanalysis.entity.GroupByCount;
-import org.apache.spark.sql.Dataset;
+import com.iti.wuzzufedataanalysis.entity.WuzzufDataModel;
 import org.apache.spark.sql.types.StructType;
 
 import java.util.List;
 
 public interface DataAnalysisService {
-    Dataset<GroupByCount> getCompanyCount();
+    List<WuzzufDataModel> getCompanyCount();
     StructType getDatasetSchema();
-    List<GroupByCount> getSkills();
-    Dataset<GroupByCount> getJobCount();
-    Dataset<GroupByCount> getLocationCount();
+    List<WuzzufDataModel> getSkills();
+    List<WuzzufDataModel> getJobCount();
+    List<WuzzufDataModel> getLocationCount();
 }
