@@ -1,8 +1,7 @@
 package com.iti.wuzzufedataanalysis.service;
 
-import com.iti.wuzzufedataanalysis.entity.GroupByCount;
+import com.iti.wuzzufedataanalysis.entity.WuzzufDataModel;
 import com.iti.wuzzufedataanalysis.repository.DatasetRepo;
-import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.types.StructType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,20 +20,20 @@ public class DataAnalysisServiceImpl implements DataAnalysisService {
         dropDuplication();
     }
 
-    public Dataset<GroupByCount> getCompanyCount(){
-        return datasetRepo.groupDatasetByCompanyName();
+    public List<WuzzufDataModel> getCompanyCount(){
+        return datasetRepo.groupDatasetByCompanyName().collectAsList().stream().sorted(Comparator.comparingLong(WuzzufDataModel::getCount).reversed()).skip(1).collect(Collectors.toList());
     }
 
-    public Dataset<GroupByCount> getJobCount(){
-        return datasetRepo.groupDatasetByJobTitle();
+    public List<WuzzufDataModel> getJobCount(){
+        return datasetRepo.groupDatasetByJobTitle().collectAsList().stream().sorted(Comparator.comparingLong(WuzzufDataModel::getCount).reversed()).collect(Collectors.toList());
     }
 
-    public Dataset<GroupByCount> getLocationCount(){
-        return datasetRepo.groupDatasetByJobLocation();
+    public List<WuzzufDataModel> getLocationCount(){
+        return datasetRepo.groupDatasetByJobLocation().collectAsList().stream().sorted(Comparator.comparingLong(WuzzufDataModel::getCount).reversed()).collect(Collectors.toList());
     }
 
-    public List<GroupByCount> getSkills(){
-        return datasetRepo.filterSkills().stream().flatMap(Collection::stream).collect(Collectors.groupingBy(skill->skill,Collectors.counting())).entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).map(key -> new GroupByCount(key.getKey(), key.getValue())).collect(Collectors.toList());
+    public List<WuzzufDataModel> getSkills(){
+        return datasetRepo.filterSkills().stream().flatMap(Collection::stream).collect(Collectors.groupingBy(skill->skill,Collectors.counting())).entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).map(key -> new WuzzufDataModel(key.getKey(), key.getValue())).collect(Collectors.toList());
     }
 
     public StructType getDatasetSchema(){

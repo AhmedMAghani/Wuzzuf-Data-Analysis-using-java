@@ -1,6 +1,6 @@
 package com.iti.wuzzufedataanalysis.controller;
 
-import com.iti.wuzzufedataanalysis.entity.GroupByCount;
+import com.iti.wuzzufedataanalysis.entity.WuzzufDataModel;
 import com.iti.wuzzufedataanalysis.service.DataAnalysisService;
 import org.apache.spark.sql.types.StructType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,22 +33,22 @@ public class DataAnalysisController {
     }
 
     @GetMapping("/getCompanysCount")
-    public ResponseEntity<List<GroupByCount>> getCompanyCount(){
-        return new ResponseEntity<>(dataAnalysisService.getCompanyCount().collectAsList(), HttpStatus.OK);
+    public ResponseEntity<List<WuzzufDataModel>> getCompanyCount(){
+        return new ResponseEntity<>(dataAnalysisService.getCompanyCount(), HttpStatus.OK);
     }
 
     @GetMapping("/getJobsCount")
-    public ResponseEntity<List<GroupByCount>> getJobCount(){
-        return new ResponseEntity<>(dataAnalysisService.getJobCount().collectAsList(), HttpStatus.OK);
+    public ResponseEntity<List<WuzzufDataModel>> getJobCount(){
+        return new ResponseEntity<>(dataAnalysisService.getJobCount(), HttpStatus.OK);
     }
 
     @GetMapping("/getLocationsCount")
-    public ResponseEntity<List<GroupByCount>> getLocationCount(){
-        return new ResponseEntity<>(dataAnalysisService.getLocationCount().collectAsList(), HttpStatus.OK);
+    public ResponseEntity<List<WuzzufDataModel>> getLocationCount(){
+        return new ResponseEntity<>(dataAnalysisService.getLocationCount(), HttpStatus.OK);
     }
 
     @GetMapping("/getSkills")
-    public ResponseEntity<List<GroupByCount>> getSkills(){
+    public ResponseEntity<List<WuzzufDataModel>> getSkills(){
         return new ResponseEntity<>(dataAnalysisService.getSkills(), HttpStatus.OK);
     }
 }
